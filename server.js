@@ -224,6 +224,9 @@ if (require.main === module) {
 
 module.exports = {
   handleRequest,
+  searchLeads,
+  diagnoseWebsite,
+  sendJson,
 };
 
 async function searchLeads(searchParams) {
