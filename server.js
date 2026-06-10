@@ -209,9 +209,9 @@ async function handleRequest(req, res) {
   }
 }
 
-const server = http.createServer(handleRequest);
-
 if (require.main === module) {
+  const server = http.createServer(handleRequest);
+
   server.listen(PORT, HOST, () => {
     const displayHost = HOST === "0.0.0.0" ? "127.0.0.1" : HOST;
     console.log(`ダサパト is running at http://${displayHost}:${PORT}`);
