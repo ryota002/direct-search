@@ -6,7 +6,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "dev": "node server.js",
-    "start": "node server.js"
+    "dev": "node lib/server.js",
+    "start": "node lib/server.js"
   }
 }
