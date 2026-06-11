@@ -26,7 +26,6 @@
 - あなたの強みをブラウザ内に保存して次回起動時に復元
 - 売り込みから始めないHPリニューアル提案文の生成
 - コースごとの提案文生成
-- IPごとのAPI利用制限
 - 同じ検索条件の短時間キャッシュ
 
 ## 生成ポリシー
@@ -71,15 +70,11 @@ APIキー未設定時は、画面上に「APIキー未設定」と表示され�
 
 ```bash
 GOOGLE_MAPS_API_KEY=your_google_maps_api_key
-API_WINDOW_LIMIT=5
-API_DAILY_LIMIT=30
 API_CACHE_MS=600000
 ```
 
-利用制限の初期値:
+キャッシュ設定:
 
-- `API_WINDOW_LIMIT`: 1分あたりの `/api/leads`・`/api/diagnose` 利用回数上限
-- `API_DAILY_LIMIT`: 1日あたりのIP別利用回数上限
 - `API_CACHE_MS`: 同じ検索条件の結果をサーバー内に保持する時間
 
 ## Vercelデプロイ
@@ -96,8 +91,6 @@ Vercel Functionsで `/api/leads`、`/api/config`、`/api/diagnose` を動かし�
 
 ```bash
 GOOGLE_MAPS_API_KEY=your_google_maps_api_key
-API_WINDOW_LIMIT=5
-API_DAILY_LIMIT=30
 API_CACHE_MS=600000
 ```
 

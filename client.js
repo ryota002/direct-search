@@ -516,11 +516,6 @@ async function runScan() {
       const response = await fetch(`/api/leads?${params}`);
       const payload = await response.json();
 
-      if (response.status === 429 || payload.error === "RATE_LIMITED") {
-        elements.integrationStatus.textContent = payload.message || "利用上限に達しました。少し時間をおいてください。";
-        return;
-      }
-
       if (!response.ok || payload.error) {
         throw new Error(payload.message || "API検索に失敗しました");
       }
