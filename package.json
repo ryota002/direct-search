@@ -2,12 +2,10 @@
   "name": "dasapato",
   "version": "0.1.0",
   "private": true,
-  "main": "lib/server.js",
   "engines": {
     "node": "20.x"
   },
   "scripts": {
-    "dev": "node lib/server.js",
-    "start": "node lib/server.js"
+    "dev": "node lib/server.js"
   }
 }
