@@ -501,7 +501,9 @@ async function runScan() {
 
   isScanning = true;
   $("#runScanButton").textContent = "診断中...";
+  $("#runScanButton").disabled = true;
   elements.integrationStatus.textContent = noLocation ? "経歴・実績と相性の良い営業先を取得中" : "営業先を取得中";
+  renderLoadingState(noLocation);
 
   try {
     if (window.location.protocol !== "file:") {
@@ -532,6 +534,7 @@ async function runScan() {
   } finally {
     isScanning = false;
     $("#runScanButton").textContent = "候補を診断";
+    $("#runScanButton").disabled = false;
   }
 
   const matched = baseLeads
@@ -546,6 +549,24 @@ async function runScan() {
   leads = matched;
   selectedLeadId = leads[0]?.id ?? null;
   render();
+}
+
+function renderLoadingState(noLocation = false) {
+  elements.leadList.innerHTML = `
+    <div class="loading-card" role="status" aria-live="polite">
+      <span class="loading-spinner" aria-hidden="true"></span>
+      <div>
+        <strong>営業先を検索中です</strong>
+        <p>${noLocation ? "拠点なしモードで、業種と強みの相性を見ながら候補を探しています。" : "Google Maps APIから候補を取得し、上位候補の連絡手段とサイトを確認しています。"}</p>
+      </div>
+    </div>
+  `;
+  elements.detailPanel.innerHTML = `
+    <div class="empty-detail">
+      <h2>診断中です</h2>
+      <p>候補が見つかり次第、提案文と診断結果を表示します。</p>
+    </div>
+  `;
 }
 
 function sortLeads(items) {
@@ -596,7 +617,10 @@ function renderLeadList() {
   const sorted = sortLeads(filteredLeads()).slice(0, 50);
 
   if (!sorted.length) {
-    elements.leadList.innerHTML = '<p class="empty-list">条件に合う候補がありません。電話込み・LINE込みの条件を調整してください。</p>';
+    const hasRawLeads = leads.length > 0;
+    elements.leadList.innerHTML = hasRawLeads
+      ? '<p class="empty-list">連絡手段フィルターで候補が非表示になっています。電話込み・LINE込みをオンにするか、別の業種で試してください。</p>'
+      : '<p class="empty-list">候補を取得できませんでした。業種を具体的にするか、拠点あり検索に切り替えて再検索してください。</p>';
     return;
   }
 
